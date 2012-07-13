@@ -1,6 +1,7 @@
 package com.hmsonline.cassandra.triggers.index;
 
 import java.nio.ByteBuffer;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.cassandra.thrift.Cassandra;
@@ -13,7 +14,6 @@ import org.apache.cassandra.thrift.SlicePredicate;
 import org.apache.cassandra.thrift.SliceRange;
 import org.apache.cassandra.utils.ByteBufferUtil;
 import org.aspectj.lang.annotation.Aspect;
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +53,7 @@ public class IndexTrigger implements Trigger {
             if (isMarkedForDelete(logEntry)) {
                 indexer.delete(columnFamily, rowKey);
             } else {
-                JSONObject json = this.getSlice(logEntry.getKeyspace(), logEntry.getColumnFamily(),
+                HashMap json = this.getSlice(logEntry.getKeyspace(), logEntry.getColumnFamily(),
                         logEntry.getRowKey(), logEntry.getConsistencyLevel());
                 indexer.index(logEntry.getColumnFamily(), ByteBufferUtil.string(logEntry.getRowKey()), json);
             }
@@ -63,9 +63,9 @@ public class IndexTrigger implements Trigger {
     }
 
     @SuppressWarnings("unchecked")
-    public JSONObject getSlice(String keyspace, String columnFamily, ByteBuffer key, ConsistencyLevel consistencyLevel)
+    public HashMap getSlice(String keyspace, String columnFamily, ByteBuffer key, ConsistencyLevel consistencyLevel)
             throws Exception {
-        JSONObject json = null;
+        HashMap json = null;
 
         SlicePredicate predicate = new SlicePredicate();
         SliceRange range = new SliceRange(ByteBufferUtil.bytes(""), ByteBufferUtil.bytes(""), false, 1000);
@@ -75,7 +75,7 @@ public class IndexTrigger implements Trigger {
                 consistencyLevel);
 
         if (slice.size() > 0) {
-            json = new JSONObject();
+            json = new HashMap();
             for (ColumnOrSuperColumn column : slice) {
                 Column col = column.getColumn();
                 json.put(new String(col.getName(), "UTF8"), new String(col.getValue(), "UTF8"));

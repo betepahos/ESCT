@@ -1,8 +1,6 @@
 package com.hmsonline.cassandra.triggers.index;
 
-import org.json.simple.JSONObject;
-import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.databind.*;
+import java.util.HashMap;
 
 public interface Indexer {
 
@@ -23,9 +21,8 @@ public interface Indexer {
    * @param rowKey
    * @param json
    */
-   ObjectMapper mapper= new ObjectMapper();
-    mapper.writeValue();
-  public void index(String columnFamily, String rowKey, JSONObject json);
+
+  public void index(String columnFamily, String rowKey, HashMap json);
 
   /**
    * Removes a row from the index.
