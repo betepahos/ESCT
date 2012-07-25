@@ -1,0 +1,58 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<packaging>jar</packaging>
+	<name> Cassandra : Elastic Search </name>
+	<description>Cassandra Elastic Search bridge built on Cassandra Triggers</description>
+	<url>https://github.com/betepahos/cassandra-elastic-search</url>
+	<groupId>com.github.betepahos</groupId>
+	<artifactId>cassandra-elastic-search</artifactId>
+	<version>1.0.1-SNAPSHOT</version>
+
+	<developers>
+		<developer>
+			<id>boneill42</id>
+			<name>Brian O'Neill</name>
+			<email>bone@alumni.brown.edu</email>
+		</developer>
+	</developers>
+
+        <dependencies>
+                <dependency>
+                        <groupId>org.elasticsearch</groupId>
+                        <artifactId>elasticsearch</artifactId>
+                        <version>0.19.8</version>
+                </dependency>
+                <dependency>
+                        <groupId>com.hmsonline</groupId>
+                        <artifactId>hms-cassandra-triggers</artifactId>
+                        <version>1.0.0</version>
+                        <exclusions>
+                                <exclusion>
+                                        <artifactId>guava</artifactId>
+                                        <groupId>com.google.guava</groupId>
+                                </exclusion>
+                                <exclusion>
+                                        <groupId>org.codehaus.jackson</groupId>
+                                        <artifactId>jackson-mapper-asl</artifactId>
+                                </exclusion>
+                                <exclusion>
+                                        <groupId>org.codehaus.jackson</groupId>
+                                        <artifactId>jackson-core-asl</artifactId>
+                                </exclusion>
+                        </exclusions>
+                </dependency>
+        </dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
