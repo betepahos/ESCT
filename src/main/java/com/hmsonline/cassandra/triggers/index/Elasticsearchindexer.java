@@ -17,6 +17,7 @@ public class Elasticsearchindexer implements Indexer {
 
     }
 
+
     public void index(String columnFamily, String rowKey, String json) {
     HashMap row = (HashMap) JSONValue.parse(json);
     index(columnFamily, rowKey, row);
@@ -36,12 +37,19 @@ public class Elasticsearchindexer implements Indexer {
       }
 
 
-    // Index using Elasticsearch
+
+
+      // Index using Elasticsearch
     try {
+          Sixnineidmath sixnineidmath = new Sixnineidmath(1,1);{
+
+          sixnineidmath.nextId();
+        }
+
         TransportClient client = new TransportClient(ImmutableSettings.settingsBuilder().put("cluster.name", "elasticsearch").build());
         client.addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
 
-        IndexResponse response = client.prepareIndex("twitter", "tweet","1")
+        IndexResponse response = client.prepareIndex("twitter", "tweet", JSONValue.toJSONString(sixnineidmath.nextId()) )
                 .setSource(jsonBuilder()
                         .startObject()
                         .field("Columnfamily: ", ColumnFamilyz)
